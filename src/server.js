@@ -4,6 +4,7 @@ const http = require('http');
 const WebSocket = require('ws');
 const cors = require('cors');
 const { ethers } = require('ethers');
+const cloudinary = require('cloudinary').v2;
 const connectDB = require('./config/db');
 const routes = require('./routes');
 const reclCtrl = require('./controllers/reclamations.controller');
@@ -22,7 +23,6 @@ const allowedOrigins = process.env.CORS_ORIGINS
 
 app.use(cors({
   origin: function (origin, callback) {
-    // Permettre les requêtes sans origine (ex: apps mobiles, Postman)
     if (!origin) return callback(null, true);
     if (allowedOrigins.indexOf(origin) !== -1) {
       callback(null, true);
@@ -36,11 +36,15 @@ app.use(cors({
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
-// Health check (version améliorée avec infos blockchain)
+// Health check (amélioré avec infos blockchain + cloudinary)
 app.get('/health', async (req, res) => {
   let blockchainStatus = 'unknown';
   let contractAddr = null;
   let walletBalance = null;
+  let cloudinaryStatus = 'unknown';
+  let cloudinaryConfigOk = false;
+
+  // Vérification blockchain
   try {
     const blockchainService = require('./services/blockchain.service');
     const balance = await blockchainService.provider.getBalance(blockchainService.wallet.address);
@@ -50,6 +54,21 @@ app.get('/health', async (req, res) => {
   } catch (err) {
     blockchainStatus = 'error';
   }
+
+  // Vérification Cloudinary
+  try {
+    // Tenter une simple requête pour valider la config
+    const testResult = await cloudinary.api.ping();
+    if (testResult && testResult.status === 'ok') {
+      cloudinaryStatus = 'connected';
+      cloudinaryConfigOk = true;
+    } else {
+      cloudinaryStatus = 'error';
+    }
+  } catch (err) {
+    cloudinaryStatus = 'error';
+  }
+
   res.json({
     status: 'ok',
     service: 'FactureChain API v2',
@@ -60,6 +79,11 @@ app.get('/health', async (req, res) => {
       status: blockchainStatus,
       contract: contractAddr,
       walletBalance: walletBalance,
+    },
+    cloudinary: {
+      status: cloudinaryStatus,
+      configOk: cloudinaryConfigOk,
+      cloudName: process.env.CLOUDINARY_CLOUD_NAME ? '✅ défini' : '❌ manquant',
     },
     timestamp: new Date().toISOString()
   });
@@ -141,7 +165,7 @@ reclCtrl.setWsBroadcast(broadcast);
 const PORT = process.env.PORT || 3000;
 
 connectDB().then(async () => {
-  // === VÉRIFICATION DE LA CONNEXION BLOCKCHAIN RÉELLE ===
+  // === VÉRIFICATION DE LA CONNEXION BLOCKCHAIN ==========
   try {
     const blockchainService = require('./services/blockchain.service');
     const balance = await blockchainService.provider.getBalance(blockchainService.wallet.address);
@@ -149,11 +173,33 @@ connectDB().then(async () => {
     console.log(`   📍 Compte : ${blockchainService.wallet.address}`);
     console.log(`   💰 Solde Sepolia : ${ethers.formatEther(balance)} ETH`);
     console.log(`   📄 Contrat : ${blockchainService.contract.target}`);
-    console.log(`   🌐 Réseau : ${blockchainService.network}\n`);
+    console.log(`   🌐 Réseau : ${blockchainService.network}`);
   } catch (err) {
     console.error('\n❌ ATTENTION - Impossible de se connecter à la blockchain :', err.message);
-    console.error('   Vérifiez votre fichier .env et que le contrat est déployé.\n');
+    console.error('   Vérifiez votre fichier .env et que le contrat est déployé.');
   }
+
+  // === VÉRIFICATION DE CLOUDINARY =========================
+  try {
+    cloudinary.config({
+      cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+      api_key: process.env.CLOUDINARY_API_KEY,
+      api_secret: process.env.CLOUDINARY_API_SECRET,
+    });
+    const pingResult = await cloudinary.api.ping();
+    if (pingResult && pingResult.status === 'ok') {
+      console.log('\n✅ Cloudinary connecté avec succès');
+      console.log(`   ☁️  Cloud name : ${process.env.CLOUDINARY_CLOUD_NAME}`);
+      console.log(`   📁 Dossier défaut : ${process.env.CLOUDINARY_FOLDER || 'facturechain/preuves'}`);
+    } else {
+      throw new Error('Ping Cloudinary échoué');
+    }
+  } catch (err) {
+    console.error('\n❌ ATTENTION - Cloudinary non initialisé :', err.message);
+    console.error('   Vérifiez les variables d\'environnement CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY, CLOUDINARY_API_SECRET');
+  }
+
+  console.log('\n'); // espace avant le démarrage du serveur
 
   server.listen(PORT, () => {
     console.log(`FactureChain Backend v2.0 demarre sur le port ${PORT}`);
