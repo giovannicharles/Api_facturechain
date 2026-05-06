@@ -1,0 +1,185 @@
+### FactureChain — smoke tests
+### Compatible VS Code REST Client / IntelliJ HTTP Client / JetBrains.
+### Usage : envoyer "Login abonné" en premier, le @accessToken est ensuite réutilisé.
+
+@host = http://localhost:4000
+@apiBase = {{host}}/api/v1
+
+### Health check
+GET {{apiBase}}/health
+
+### --- AUTH : Login abonné Marie ---
+# @name login
+POST {{apiBase}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "marie.atangana@example.cm",
+  "password": "Demo@2024"
+}
+
+@accessToken = {{login.response.body.data.tokens.accessToken}}
+@refreshToken = {{login.response.body.data.tokens.refreshToken}}
+
+### --- AUTH : profil ---
+GET {{apiBase}}/auth/me
+Authorization: Bearer {{accessToken}}
+
+### --- ABONNÉ : ma fiche client ---
+GET {{apiBase}}/me/customer
+Authorization: Bearer {{accessToken}}
+
+### --- ABONNÉ : mes compteurs ---
+# @name myMeters
+GET {{apiBase}}/me/meters
+Authorization: Bearer {{accessToken}}
+
+@meterId = {{myMeters.response.body.data.meters[0]._id}}
+
+### --- ABONNÉ : factures du compteur ---
+# @name myInvoices
+GET {{apiBase}}/meters/{{meterId}}/invoices?limit=12
+Authorization: Bearer {{accessToken}}
+
+@invoiceId = {{myInvoices.response.body.data[0]._id}}
+@invoiceNumber = {{myInvoices.response.body.data[0].invoiceNumber}}
+
+### --- ABONNÉ : stats consommation 12 mois ---
+GET {{apiBase}}/meters/{{meterId}}/consumption-stats
+Authorization: Bearer {{accessToken}}
+
+### --- ABONNÉ : anomalies du compteur ---
+GET {{apiBase}}/meters/{{meterId}}/anomalies
+Authorization: Bearer {{accessToken}}
+
+### --- FACTURE : recherche par numéro (clé centrale) ---
+GET {{apiBase}}/invoices/search?invoiceNumber={{invoiceNumber}}
+Authorization: Bearer {{accessToken}}
+
+### --- FACTURE : détail ---
+GET {{apiBase}}/invoices/{{invoiceId}}
+Authorization: Bearer {{accessToken}}
+
+### --- FACTURE : vérifier l'empreinte SHA-256 ---
+GET {{apiBase}}/invoices/{{invoiceId}}/verify
+Authorization: Bearer {{accessToken}}
+
+### --- FACTURE : vérifier toute la chaîne du compteur ---
+GET {{apiBase}}/meters/{{meterId}}/verify-chain
+Authorization: Bearer {{accessToken}}
+
+### --- FACTURE : télécharger le PDF ---
+GET {{apiBase}}/invoices/{{invoiceId}}/pdf
+Authorization: Bearer {{accessToken}}
+
+### --- AUTO-RELEVÉ ---
+POST {{apiBase}}/index-readings
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "meterId": "{{meterId}}",
+  "value": 28450,
+  "notes": "Auto-relevé de fin de mois"
+}
+
+### --- RÉCLAMATION : soumettre ---
+# @name submitClaim
+POST {{apiBase}}/claims
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "type": "BILLING_DISPUTE",
+  "title": "Facture du mois douteuse",
+  "description": "Le montant facturé semble nettement supérieur à ce que je recalcule sur la base de mon index. Merci d'investiguer.",
+  "meterId": "{{meterId}}",
+  "invoiceId": "{{invoiceId}}",
+  "priority": "high"
+}
+
+@claimId = {{submitClaim.response.body.data.claim._id}}
+
+### --- RÉCLAMATION : mes réclamations ---
+GET {{apiBase}}/claims/mine
+Authorization: Bearer {{accessToken}}
+
+### --- RÉCLAMATION : ajouter un message ---
+POST {{apiBase}}/claims/{{claimId}}/messages
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "body": "Je relance, sans nouvelle de votre côté depuis 48h."
+}
+
+### --- COUPURES : carte ---
+GET {{apiBase}}/outages?activeOnly=true
+
+### --- COUPURES : signaler ---
+POST {{apiBase}}/outages
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "region": "Centre",
+  "city": "Yaoundé",
+  "neighborhood": "Bastos",
+  "startTime": "2026-05-06T18:00:00.000Z",
+  "description": "Coupure totale dans la zone."
+}
+
+### --- STATS publiques : anomalies par zone ---
+GET {{apiBase}}/public/stats/anomalies-by-zone
+
+### --- STATS publiques : coupures par zone ---
+GET {{apiBase}}/public/stats/outages-by-zone
+
+### --- ADMIN : login ---
+# @name loginAdmin
+POST {{apiBase}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "admin@facturechain.cm",
+  "password": "Admin@2024"
+}
+
+@adminToken = {{loginAdmin.response.body.data.tokens.accessToken}}
+
+### --- ADMIN : dashboard ---
+GET {{apiBase}}/admin/dashboard
+Authorization: Bearer {{adminToken}}
+
+### --- ADMIN : console réclamations ---
+GET {{apiBase}}/admin/claims?status=transmitted_to_eneo
+Authorization: Bearer {{adminToken}}
+
+### --- ADMIN : changer statut réclamation ---
+PATCH {{apiBase}}/admin/claims/{{claimId}}/status
+Authorization: Bearer {{adminToken}}
+Content-Type: application/json
+
+{
+  "status": "received",
+  "note": "Prise en charge par l'équipe support"
+}
+
+### --- ADMIN : créer une annonce ---
+POST {{apiBase}}/admin/announcements
+Authorization: Bearer {{adminToken}}
+Content-Type: application/json
+
+{
+  "title": "Maintenance programmée",
+  "body": "Une maintenance est programmée samedi de 22h à 4h sur Yaoundé Centre.",
+  "severity": "warning",
+  "target": { "scope": "city", "region": "Centre", "city": "Yaoundé" }
+}
+
+### --- LOGOUT ---
+POST {{apiBase}}/auth/logout
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{ "refreshToken": "{{refreshToken}}" }

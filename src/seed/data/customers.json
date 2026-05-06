@@ -1,0 +1,104 @@
+[
+  {
+    "clientId": "ENC-2023-000412",
+    "firstName": "Marie",
+    "lastName": "Atangana",
+    "phone": "+237 690 11 22 33",
+    "email": "marie.atangana@example.cm",
+    "nationalIdNumber": "11400182AA",
+    "address": {
+      "street": "Rue 1.789",
+      "neighborhood": "Bastos",
+      "city": "Yaoundé",
+      "region": "Centre",
+      "country": "Cameroun",
+      "coordinates": { "lat": 3.8893, "lng": 11.5174 }
+    },
+    "customerType": "residential"
+  },
+  {
+    "clientId": "ENC-2022-000189",
+    "firstName": "Patrick",
+    "lastName": "Mbarga",
+    "phone": "+237 691 22 33 44",
+    "email": "patrick.mbarga@example.cm",
+    "nationalIdNumber": "11200455CB",
+    "address": {
+      "street": "Avenue Charles de Gaulle",
+      "neighborhood": "Akwa",
+      "city": "Douala",
+      "region": "Littoral",
+      "country": "Cameroun",
+      "coordinates": { "lat": 4.0511, "lng": 9.7679 }
+    },
+    "customerType": "commercial"
+  },
+  {
+    "clientId": "ENC-2024-000731",
+    "firstName": "Sandra",
+    "lastName": "Eboa",
+    "phone": "+237 695 33 44 55",
+    "email": "sandra.eboa@example.cm",
+    "nationalIdNumber": "11700022DD",
+    "address": {
+      "street": "Quartier Bonamoussadi, rue 3.412",
+      "neighborhood": "Bonamoussadi",
+      "city": "Douala",
+      "region": "Littoral",
+      "country": "Cameroun",
+      "coordinates": { "lat": 4.094, "lng": 9.752 }
+    },
+    "customerType": "residential"
+  },
+  {
+    "clientId": "ENC-2021-000058",
+    "firstName": "Francis",
+    "lastName": "Ngono",
+    "phone": "+237 677 44 55 66",
+    "email": "francis.ngono@example.cm",
+    "nationalIdNumber": "10800999EE",
+    "address": {
+      "street": "Carrefour Mvog-Mbi",
+      "neighborhood": "Mvog-Mbi",
+      "city": "Yaoundé",
+      "region": "Centre",
+      "country": "Cameroun",
+      "coordinates": { "lat": 3.8634, "lng": 11.5169 }
+    },
+    "customerType": "residential"
+  },
+  {
+    "clientId": "ENC-2023-000905",
+    "firstName": "Rosine",
+    "lastName": "Fokou",
+    "phone": "+237 696 55 66 77",
+    "email": "rosine.fokou@example.cm",
+    "nationalIdNumber": "12500701FF",
+    "address": {
+      "street": "Quartier Kamkop",
+      "neighborhood": "Kamkop",
+      "city": "Bafoussam",
+      "region": "Ouest",
+      "country": "Cameroun",
+      "coordinates": { "lat": 5.4781, "lng": 10.4174 }
+    },
+    "customerType": "residential"
+  },
+  {
+    "clientId": "ENC-2024-001120",
+    "firstName": "Boris",
+    "lastName": "Ekane",
+    "phone": "+237 698 66 77 88",
+    "email": "boris.ekane@example.cm",
+    "nationalIdNumber": "10300333GG",
+    "address": {
+      "street": "Quartier Mile 4",
+      "neighborhood": "Nkwen",
+      "city": "Bamenda",
+      "region": "Nord-Ouest",
+      "country": "Cameroun",
+      "coordinates": { "lat": 5.9597, "lng": 10.1462 }
+    },
+    "customerType": "residential"
+  }
+]

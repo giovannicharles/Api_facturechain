@@ -1,0 +1,72 @@
+[
+  {
+    "email": "admin@facturechain.cm",
+    "password": "Admin@2024",
+    "firstName": "Aïcha",
+    "lastName": "Tchamba",
+    "phone": "+237 670 00 00 01",
+    "role": "admin"
+  },
+  {
+    "email": "agent@facturechain.cm",
+    "password": "Agent@2024",
+    "firstName": "Joseph",
+    "lastName": "Mvondo",
+    "phone": "+237 670 00 00 02",
+    "role": "agent"
+  },
+  {
+    "email": "marie.atangana@example.cm",
+    "password": "Demo@2024",
+    "firstName": "Marie",
+    "lastName": "Atangana",
+    "phone": "+237 690 11 22 33",
+    "role": "subscriber",
+    "clientId": "ENC-2023-000412"
+  },
+  {
+    "email": "patrick.mbarga@example.cm",
+    "password": "Demo@2024",
+    "firstName": "Patrick",
+    "lastName": "Mbarga",
+    "phone": "+237 691 22 33 44",
+    "role": "subscriber",
+    "clientId": "ENC-2022-000189"
+  },
+  {
+    "email": "sandra.eboa@example.cm",
+    "password": "Demo@2024",
+    "firstName": "Sandra",
+    "lastName": "Eboa",
+    "phone": "+237 695 33 44 55",
+    "role": "subscriber",
+    "clientId": "ENC-2024-000731"
+  },
+  {
+    "email": "francis.ngono@example.cm",
+    "password": "Demo@2024",
+    "firstName": "Francis",
+    "lastName": "Ngono",
+    "phone": "+237 677 44 55 66",
+    "role": "subscriber",
+    "clientId": "ENC-2021-000058"
+  },
+  {
+    "email": "rosine.fokou@example.cm",
+    "password": "Demo@2024",
+    "firstName": "Rosine",
+    "lastName": "Fokou",
+    "phone": "+237 696 55 66 77",
+    "role": "subscriber",
+    "clientId": "ENC-2023-000905"
+  },
+  {
+    "email": "boris.ekane@example.cm",
+    "password": "Demo@2024",
+    "firstName": "Boris",
+    "lastName": "Ekane",
+    "phone": "+237 698 66 77 88",
+    "role": "subscriber",
+    "clientId": "ENC-2024-001120"
+  }
+]

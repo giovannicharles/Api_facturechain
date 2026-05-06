@@ -1,0 +1,43 @@
+[
+  {
+    "clientId": "ENC-2023-000412",
+    "meterIndex": 0,
+    "type": "BILLING_DISPUTE",
+    "title": "Facture d'avril anormalement élevée",
+    "description": "Ma facture du mois d'avril affiche 480 kWh alors que je suis seule à la maison et que je n'ai rien changé à mes habitudes. Les mois précédents tournaient autour de 280 kWh. Je conteste ce relevé et demande une vérification du compteur.",
+    "priority": "high",
+    "status": "transmitted_to_eneo",
+    "ageDays": 18
+  },
+  {
+    "clientId": "ENC-2022-000189",
+    "meterIndex": 0,
+    "type": "METER_DEFECT",
+    "title": "Compteur qui clignote anormalement",
+    "description": "Depuis deux semaines, l'afficheur du compteur de la boutique clignote en permanence et les chiffres ne sont parfois plus lisibles. Je crains une dérive du relevé.",
+    "priority": "medium",
+    "status": "investigating",
+    "ageDays": 6
+  },
+  {
+    "clientId": "ENC-2024-000731",
+    "meterIndex": 0,
+    "type": "POWER_OUTAGE",
+    "title": "Coupures répétées la nuit à Bonamoussadi",
+    "description": "Quasi toutes les nuits depuis 10 jours, le courant saute entre 22h et 5h. Cela perturbe gravement le travail à distance et endommage les appareils.",
+    "priority": "high",
+    "status": "received",
+    "ageDays": 3
+  },
+  {
+    "clientId": "ENC-2021-000058",
+    "meterIndex": 0,
+    "type": "WRONG_READING",
+    "title": "Index relevé manifestement faux",
+    "description": "L'agent ENEO a relevé un index inférieur à celui du mois précédent. Cela donne une consommation négative qui ne peut pas être correcte.",
+    "priority": "medium",
+    "status": "resolved",
+    "ageDays": 30,
+    "resolution": "ENEO a confirmé l'erreur de saisie. Index rectifié et nouvelle facture émise."
+  }
+]

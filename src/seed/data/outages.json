@@ -1,0 +1,12 @@
+[
+  { "region": "Littoral", "city": "Douala", "neighborhood": "Bonamoussadi", "ageDays": 1, "duration": 4, "confirmations": 12, "status": "confirmed" },
+  { "region": "Littoral", "city": "Douala", "neighborhood": "Akwa", "ageDays": 2, "duration": 3, "confirmations": 8, "status": "confirmed" },
+  { "region": "Littoral", "city": "Douala", "neighborhood": "Bonabéri", "ageDays": 3, "duration": 6, "confirmations": 15, "status": "resolved" },
+  { "region": "Centre", "city": "Yaoundé", "neighborhood": "Bastos", "ageDays": 1, "duration": 2, "confirmations": 5, "status": "confirmed" },
+  { "region": "Centre", "city": "Yaoundé", "neighborhood": "Mvog-Mbi", "ageDays": 4, "duration": 5, "confirmations": 9, "status": "resolved" },
+  { "region": "Centre", "city": "Yaoundé", "neighborhood": "Tsinga", "ageDays": 2, "duration": 3, "confirmations": 4, "status": "confirmed" },
+  { "region": "Ouest", "city": "Bafoussam", "neighborhood": "Kamkop", "ageDays": 5, "duration": 8, "confirmations": 6, "status": "resolved" },
+  { "region": "Nord-Ouest", "city": "Bamenda", "neighborhood": "Nkwen", "ageDays": 1, "duration": 7, "confirmations": 11, "status": "confirmed" },
+  { "region": "Nord-Ouest", "city": "Bamenda", "neighborhood": "Mile 4", "ageDays": 2, "duration": 4, "confirmations": 7, "status": "confirmed" },
+  { "region": "Sud-Ouest", "city": "Buea", "neighborhood": "Molyko", "ageDays": 6, "duration": 5, "confirmations": 3, "status": "resolved" }
+]

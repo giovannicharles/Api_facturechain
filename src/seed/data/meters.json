@@ -1,0 +1,121 @@
+[
+  {
+    "meterNumber": "CMP-YDE-000412-A",
+    "clientId": "ENC-2023-000412",
+    "label": "Maison principale",
+    "tariffCategory": "BT_RESIDENTIAL",
+    "contractedPower": 5,
+    "address": {
+      "street": "Rue 1.789",
+      "neighborhood": "Bastos",
+      "city": "Yaoundé",
+      "region": "Centre",
+      "coordinates": { "lat": 3.8893, "lng": 11.5174 }
+    },
+    "baseConsumption": 280,
+    "consumptionVariance": 40,
+    "anomalyMonths": [4]
+  },
+  {
+    "meterNumber": "CMP-DLA-000189-A",
+    "clientId": "ENC-2022-000189",
+    "label": "Boutique principale",
+    "tariffCategory": "BT_PROFESSIONAL",
+    "contractedPower": 10,
+    "address": {
+      "street": "Avenue Charles de Gaulle",
+      "neighborhood": "Akwa",
+      "city": "Douala",
+      "region": "Littoral",
+      "coordinates": { "lat": 4.0511, "lng": 9.7679 }
+    },
+    "baseConsumption": 850,
+    "consumptionVariance": 120,
+    "anomalyMonths": [7, 8]
+  },
+  {
+    "meterNumber": "CMP-DLA-000189-B",
+    "clientId": "ENC-2022-000189",
+    "label": "Domicile familial",
+    "tariffCategory": "BT_RESIDENTIAL",
+    "contractedPower": 5,
+    "address": {
+      "street": "Bonapriso, Rue Ngosso Din",
+      "neighborhood": "Bonapriso",
+      "city": "Douala",
+      "region": "Littoral",
+      "coordinates": { "lat": 4.0394, "lng": 9.7044 }
+    },
+    "baseConsumption": 320,
+    "consumptionVariance": 50,
+    "anomalyMonths": []
+  },
+  {
+    "meterNumber": "CMP-DLA-000731-A",
+    "clientId": "ENC-2024-000731",
+    "label": "Appartement",
+    "tariffCategory": "BT_RESIDENTIAL",
+    "contractedPower": 5,
+    "address": {
+      "street": "Quartier Bonamoussadi",
+      "neighborhood": "Bonamoussadi",
+      "city": "Douala",
+      "region": "Littoral",
+      "coordinates": { "lat": 4.094, "lng": 9.752 }
+    },
+    "baseConsumption": 180,
+    "consumptionVariance": 30,
+    "anomalyMonths": [9]
+  },
+  {
+    "meterNumber": "CMP-YDE-000058-A",
+    "clientId": "ENC-2021-000058",
+    "label": "Maison familiale",
+    "tariffCategory": "BT_RESIDENTIAL",
+    "contractedPower": 5,
+    "address": {
+      "street": "Carrefour Mvog-Mbi",
+      "neighborhood": "Mvog-Mbi",
+      "city": "Yaoundé",
+      "region": "Centre",
+      "coordinates": { "lat": 3.8634, "lng": 11.5169 }
+    },
+    "baseConsumption": 220,
+    "consumptionVariance": 35,
+    "anomalyMonths": [6]
+  },
+  {
+    "meterNumber": "CMP-BAF-000905-A",
+    "clientId": "ENC-2023-000905",
+    "label": "Maison",
+    "tariffCategory": "BT_RESIDENTIAL",
+    "contractedPower": 5,
+    "address": {
+      "street": "Quartier Kamkop",
+      "neighborhood": "Kamkop",
+      "city": "Bafoussam",
+      "region": "Ouest",
+      "coordinates": { "lat": 5.4781, "lng": 10.4174 }
+    },
+    "baseConsumption": 150,
+    "consumptionVariance": 25,
+    "anomalyMonths": []
+  },
+  {
+    "meterNumber": "CMP-BDA-001120-A",
+    "clientId": "ENC-2024-001120",
+    "label": "Maison principale",
+    "tariffCategory": "BT_RESIDENTIAL",
+    "contractedPower": 5,
+    "address": {
+      "street": "Quartier Mile 4",
+      "neighborhood": "Nkwen",
+      "city": "Bamenda",
+      "region": "Nord-Ouest",
+      "coordinates": { "lat": 5.9597, "lng": 10.1462 }
+    },
+    "baseConsumption": 195,
+    "consumptionVariance": 30,
+    "anomalyMonths": [3, 11]
+  }
+]

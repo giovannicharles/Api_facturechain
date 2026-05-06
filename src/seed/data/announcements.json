@@ -1,0 +1,14 @@
+[
+  {
+    "title": "Délestage programmé — secteur Bonabéri",
+    "body": "ENEO informe les abonnés du secteur Bonabéri d'une coupure programmée de 19h à 22h ce jeudi pour des travaux de maintenance sur le poste source. Merci de votre compréhension.",
+    "severity": "warning",
+    "target": { "scope": "neighborhood", "region": "Littoral", "city": "Douala", "neighborhood": "Bonabéri" }
+  },
+  {
+    "title": "Campagne de relevés — Yaoundé",
+    "body": "Une campagne de relevés sur site démarre lundi à Yaoundé. Si vous êtes absent, vous pouvez transmettre votre auto-relevé via FactureChain (photo du compteur).",
+    "severity": "info",
+    "target": { "scope": "city", "region": "Centre", "city": "Yaoundé" }
+  }
+]

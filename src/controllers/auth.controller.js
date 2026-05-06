@@ -1,52 +1,36 @@
-const jwt = require('jsonwebtoken');
-const { User } = require('../models');
+const asyncHandler = require('../utils/asyncHandler');
+const { ok, created } = require('../utils/response');
+const authService = require('../services/auth.service');
+const User = require('../models/User');
 
-const signToken = (id) => jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRES_IN || '7d' });
+const register = asyncHandler(async (req, res) => {
+  const user = await authService.register(req.body);
+  return created(res, { user: user.toJSON() });
+});
 
-exports.register = async (req, res) => {
-  try {
-    const { email, password, prenom, nom, numeroAbonne, zone, telephone } = req.body;
-    if (!email || !password || !prenom || !nom || !numeroAbonne) {
-      return res.status(400).json({ message: 'Tous les champs obligatoires doivent être remplis' });
-    }
-    const exists = await User.findOne({ $or: [{ email }, { numeroAbonne }] });
-    if (exists) return res.status(409).json({ message: 'Email ou numéro d\'abonné déjà utilisé' });
+const login = asyncHandler(async (req, res) => {
+  const result = await authService.login({
+    email: req.body.email,
+    password: req.body.password,
+    ip: req.ip,
+    userAgent: req.headers['user-agent'] || '',
+  });
+  return ok(res, result);
+});
 
-    const user = await User.create({ email, password, prenom, nom, numeroAbonne, zone, telephone });
-    const token = signToken(user._id);
+const refresh = asyncHandler(async (req, res) => {
+  const data = await authService.refresh(req.body.refreshToken);
+  return ok(res, data);
+});
 
-    res.status(201).json({
-      token,
-      user: { id: user._id, email: user.email, nom: user.nom, prenom: user.prenom, numeroAbonne: user.numeroAbonne, zone: user.zone, compteur: user.compteur }
-    });
-  } catch (err) {
-    console.error('Register error:', err);
-    res.status(500).json({ message: 'Erreur serveur' });
-  }
-};
+const logout = asyncHandler(async (req, res) => {
+  await authService.logout(req.user?.id, req.body.refreshToken || '');
+  return ok(res, { ok: true });
+});
 
-exports.login = async (req, res) => {
-  try {
-    const { email, password } = req.body;
-    if (!email || !password) return res.status(400).json({ message: 'Email et mot de passe requis' });
+const me = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.user.id).populate('customerId').lean();
+  return ok(res, { user });
+});
 
-    const user = await User.findOne({ email }).select('+password');
-    if (!user || !(await user.verifyPassword(password))) {
-      return res.status(401).json({ message: 'Identifiants incorrects' });
-    }
-    if (!user.actif) return res.status(403).json({ message: 'Compte désactivé' });
-
-    const token = signToken(user._id);
-    res.json({
-      token,
-      user: { id: user._id, email: user.email, nom: user.nom, prenom: user.prenom, numeroAbonne: user.numeroAbonne, zone: user.zone, compteur: user.compteur }
-    });
-  } catch (err) {
-    console.error('Login error:', err);
-    res.status(500).json({ message: 'Erreur serveur' });
-  }
-};
-
-exports.me = async (req, res) => {
-  res.json({ user: req.user });
-};
+module.exports = { register, login, refresh, logout, me };
