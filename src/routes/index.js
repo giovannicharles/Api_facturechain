@@ -64,6 +64,7 @@ router.get('/admin/users', authenticate, authorize('admin'), admin.listUsers);
 router.patch('/admin/users/:userId/status', authenticate, authorize('admin'), admin.updateUserStatus);
 router.get('/admin/customers', authenticate, authorize('agent', 'admin'), admin.listCustomers);
 router.get('/admin/claims', authenticate, authorize('agent', 'admin'), claim.adminList);
+router.get('/admin/claims/:claimId', authenticate, authorize('agent', 'admin'), claim.detail);
 router.patch('/admin/claims/:claimId/status', authenticate, authorize('agent', 'admin'),
   validate(schemas.claim.changeStatus), claim.changeStatus);
 router.patch('/admin/claims/:claimId/assign', authenticate, authorize('admin'), claim.assign);
